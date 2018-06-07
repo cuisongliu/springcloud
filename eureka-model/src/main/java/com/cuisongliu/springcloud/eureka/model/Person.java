@@ -33,11 +33,27 @@ public class Person implements Serializable {
     private String name;
     private Integer age;
     private String sex;
+    private String msg;
 
     public Person(String name, Integer age, String sex) {
         this.name = name;
         this.age = age;
         this.sex = sex;
+    }
+
+    public Person(String name, Integer age, String sex, String msg) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getName() {

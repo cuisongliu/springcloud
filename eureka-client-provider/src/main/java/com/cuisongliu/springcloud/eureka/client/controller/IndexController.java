@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 接口调用服务
  *
@@ -40,7 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     @RequestMapping(value = "/index/{age}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person index(@PathVariable("age") Integer age){
-        return new Person("name",age,"man");
+    public Person index(@PathVariable("age") Integer age, HttpServletRequest request){
+        return new Person("name",age,"man",request.getRequestURL().toString());
     }
 }

@@ -1,4 +1,5 @@
 spring:
+  profiles: provider1
   application:
     name: service-provider
 eureka:
@@ -6,4 +7,21 @@ eureka:
     hostname: localhost
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
+server:
+  port: 8080
+
+---
+
+spring:
+  profiles: provider2
+  application:
+    name: service-provider
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
+server:
+  port: 8081
