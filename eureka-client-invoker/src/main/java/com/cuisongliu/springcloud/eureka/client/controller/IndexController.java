@@ -23,6 +23,7 @@ package com.cuisongliu.springcloud.eureka.client.controller;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springcloud.eureka.client.feign.ProviderClient;
 import com.netflix.appinfo.InstanceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -50,9 +51,12 @@ import java.util.List;
 @RestController
 public class IndexController {
     @Autowired
-    public IndexController(DiscoveryClient client) {
+    public IndexController(DiscoveryClient client, ProviderClient providerClient) {
         this.client = client;
+        this.providerClient = providerClient;
     }
+
+    private final ProviderClient providerClient;
 
     @Bean
     @LoadBalanced
@@ -63,9 +67,9 @@ public class IndexController {
     @RequestMapping(value = "/router",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public String router(){
 
-        RestTemplate restTpl = restTemplate();
-        String json = restTpl.getForObject("http://service-provider/index/23",String.class);
-        return json;
+//        RestTemplate restTpl = restTemplate();
+//        String json = restTpl.getForObject("http://service-provider/index/23",String.class);
+        return providerClient.index(23);
     }
 
     private final DiscoveryClient client;

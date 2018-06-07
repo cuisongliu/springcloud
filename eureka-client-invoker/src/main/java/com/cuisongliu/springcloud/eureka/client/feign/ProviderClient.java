@@ -1,4 +1,4 @@
-package com.cuisongliu.springcloud.eureka.client;
+package com.cuisongliu.springcloud.eureka.client.feign;
 /*
  * The MIT License (MIT)
  *
@@ -23,22 +23,19 @@ package com.cuisongliu.springcloud.eureka.client;
  * THE SOFTWARE.
  */
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * eureka 客户端消费者 启动类
- *
  * @author cuisongliu [cuisongliu@qq.com]
- * @since 2018-06-06 下午9:34
+ * @since 2018-06-07 下午11:23
  */
-@EnableDiscoveryClient
-@SpringBootApplication
-@EnableFeignClients
-public class Startup {
-    public static void main(String[] args) {
-        SpringApplication.run(Startup.class,args);
-    }
+@FeignClient("service-provider")
+public interface ProviderClient {
+
+    @RequestMapping(method = RequestMethod.GET,value = "/index/{age}")
+    String index(@PathVariable("age") Integer age);
+
 }
