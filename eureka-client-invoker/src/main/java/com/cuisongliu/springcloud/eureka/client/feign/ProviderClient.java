@@ -24,6 +24,7 @@ package com.cuisongliu.springcloud.eureka.client.feign;
  */
 
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,10 +33,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-07 下午11:23
  */
-@FeignClient("service-provider")
+@FeignClient(name="service-provider",fallback = ProviderClient.ProviderClientFallback.class)
 public interface ProviderClient {
 
     @RequestMapping(method = RequestMethod.GET,value = "/index/{age}")
     String index(@PathVariable("age") Integer age);
 
+    @Component
+    static class ProviderClientFallback implements ProviderClient{
+
+        @Override
+        public String index(Integer age) {
+            return "ffff,error";
+        }
+    }
 }

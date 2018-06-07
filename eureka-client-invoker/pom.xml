@@ -32,6 +32,10 @@
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.cuisongliu</groupId>
             <artifactId>eureka-model</artifactId>
             <version>1.0-SNAPSHOT</version>
