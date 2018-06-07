@@ -25,6 +25,7 @@ package com.cuisongliu.springcloud.eureka.client.controller;
 
 import com.cuisongliu.springcloud.eureka.client.feign.ProviderClient;
 import com.netflix.appinfo.InstanceInfo;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -65,12 +66,12 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/router",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @HystrixCommand(fallbackMethod ="ff")
     public String router(){
-
-//        RestTemplate restTpl = restTemplate();
-//        String json = restTpl.getForObject("http://service-provider/index/23",String.class);
         return providerClient.index(23);
     }
+
+    public String ff(){return "error";}
 
     private final DiscoveryClient client;
 
