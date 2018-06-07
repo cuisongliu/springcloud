@@ -5,9 +5,12 @@ spring:
 eureka:
   instance:
     hostname: localhost
+    metadata-map:
+      asMap: abc
   client:
     service-url:
       defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
+    instance-info-replication-interval-seconds: 10
 server:
   port: 8080
 
@@ -20,8 +23,11 @@ spring:
 eureka:
   instance:
     hostname: localhost
+    metadata-map:
+      asMap: bcd
   client:
     service-url:
       defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
+      instance-info-replication-interval-seconds: 10
 server:
   port: 8081

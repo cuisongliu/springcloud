@@ -1,8 +1,12 @@
 server:
   port: 8761
 eureka:
+  server:
+    enable-self-preservation: false # 关闭自我保护
   instance:
     hostname: eureka1
+    metadata-map:
+          asMap: egf1
   client:
     service-url:
       defaultZone: http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
@@ -18,6 +22,8 @@ server:
 eureka:
   instance:
     hostname: eureka2
+    metadata-map:
+      asMap: egf2
   client:
     service-url:
       defaultZone: http://eureka1:8761/eureka/,http://eureka3:8763/eureka/
@@ -33,6 +39,8 @@ server:
 eureka:
   instance:
     hostname: eureka3
+    metadata-map:
+     asMap: egf3
   client:
     service-url:
       defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/

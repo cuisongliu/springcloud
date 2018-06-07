@@ -23,7 +23,12 @@ package com.cuisongliu.springcloud.eureka.client.controller;
  * THE SOFTWARE.
  */
 
+import com.netflix.appinfo.InstanceInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -31,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 调用方controller
@@ -41,6 +49,11 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @RestController
 public class IndexController {
+    @Autowired
+    public IndexController(DiscoveryClient client) {
+        this.client = client;
+    }
+
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate(){
@@ -54,4 +67,34 @@ public class IndexController {
         String json = restTpl.getForObject("http://service-provider/index/23",String.class);
         return json;
     }
+
+    private final DiscoveryClient client;
+
+    @RequestMapping(value = "/index",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public String index(){
+        //获取服务信息
+        List<ServiceInstance> instances = instances();
+        //输出服务信息以及状态
+        for (ServiceInstance instance:instances){
+            EurekaDiscoveryClient.EurekaServiceInstance esi = (EurekaDiscoveryClient.EurekaServiceInstance)instance;
+            InstanceInfo info = esi.getInstanceInfo();
+            System.out.println(info.getAppName() + "---" + info.getInstanceId() + "---" + info.getStatus());
+        }
+        List<ServiceInstance> ins = client.getInstances("eureka-server");
+        for (ServiceInstance service:ins){
+            System.out.println(service.getMetadata().get("asMap"));
+        }
+
+        return "";
+    }
+
+    private List<ServiceInstance> instances(){
+        List<String> ids = client.getServices();
+        List<ServiceInstance> result = new ArrayList<>();
+        for (String id : ids) {
+            result.addAll(client.getInstances(id));
+        }
+        return result;
+    }
+
 }

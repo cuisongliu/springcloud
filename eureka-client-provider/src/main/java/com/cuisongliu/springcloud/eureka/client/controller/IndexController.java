@@ -41,8 +41,16 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class IndexController {
 
+    public static Boolean canVisitDB = true;
+
     @RequestMapping(value = "/index/{age}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public Person index(@PathVariable("age") Integer age, HttpServletRequest request){
         return new Person("name",age,"man",request.getRequestURL().toString());
+    }
+
+    @RequestMapping(value = "/db/{canVisitDB}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public String index(@PathVariable("canVisitDB") Boolean canVisitDB, HttpServletRequest request){
+        IndexController.canVisitDB = canVisitDB;
+        return "当前数据库访问状态为:" +  IndexController.canVisitDB;
     }
 }
