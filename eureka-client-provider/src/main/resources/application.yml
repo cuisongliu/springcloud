@@ -1,5 +1,4 @@
 spring:
-  profiles: provider1
   application:
     name: service-provider
 eureka:
@@ -7,27 +6,10 @@ eureka:
     hostname: localhost
     metadata-map:
       asMap: abc
+    instance-id: ${spring.application.name}-${spring.cloud.client.ipAddress}:${random.int}
   client:
     service-url:
       defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
     instance-info-replication-interval-seconds: 10
 server:
-  port: 8080
-
----
-
-spring:
-  profiles: provider2
-  application:
-    name: service-provider
-eureka:
-  instance:
-    hostname: localhost
-    metadata-map:
-      asMap: bcd
-  client:
-    service-url:
-      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
-      instance-info-replication-interval-seconds: 10
-server:
-  port: 8081
+  port: 0
