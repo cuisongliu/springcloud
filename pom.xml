@@ -13,6 +13,7 @@
         <module>eureka-client-provider</module>
         <module>eureka-model</module>
         <module>eureka-client-invoker</module>
+        <module>zuul-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

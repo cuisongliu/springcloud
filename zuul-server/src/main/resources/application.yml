@@ -1,0 +1,17 @@
+zuul:
+  routes:
+    index:
+      path: /router/**
+      serviceId: service-invoker
+spring:
+  application:
+    name: zuul-server
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/,http://eureka3:8763/eureka/
+    instance-info-replication-interval-seconds: 10
+server:
+  port: ${random.int[9010,10000]}
