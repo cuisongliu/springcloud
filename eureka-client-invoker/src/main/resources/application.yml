@@ -12,3 +12,6 @@ eureka:
 feign:
   hystrix:
     enabled: true
+ribbon:
+  okhttp:
+    enabled: true

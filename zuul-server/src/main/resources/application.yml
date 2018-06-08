@@ -15,3 +15,6 @@ eureka:
     instance-info-replication-interval-seconds: 10
 server:
   port: ${random.int[9010,10000]}
+ribbon:
+  okhttp:
+    enabled: true
