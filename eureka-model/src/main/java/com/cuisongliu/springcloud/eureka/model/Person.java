@@ -23,7 +23,7 @@ package com.cuisongliu.springcloud.eureka.model;
  * THE SOFTWARE.
  */
 
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -44,4 +44,9 @@ public class Person implements Serializable {
         this.sex = sex;
         this.msg = msg;
     }
+
+    protected boolean canEqual(Object other) {
+        return other instanceof Person;
+    }
+
 }
