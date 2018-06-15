@@ -6,6 +6,7 @@
         <artifactId>springcloud</artifactId>
         <groupId>com.cuisongliu</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -26,7 +27,7 @@
         <dependency>
             <groupId>com.cuisongliu</groupId>
             <artifactId>eureka-model</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
